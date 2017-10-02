@@ -8,6 +8,7 @@ var EventDispatcher = {
     addEventListener: function (name, callback, opt_scope) {
 
     },
+
     /**
      * @param {string} name
      * @param {function} callback
@@ -16,12 +17,14 @@ var EventDispatcher = {
     removeEventListener: function (name, callback, opt_scope) {
 
     },
+
     /**
      * @param {string} name
      */
     dispatchEvent: function (name) {
 
     },
+
     /**
      * @param {string} name
      * @return {boolean}
@@ -29,6 +32,7 @@ var EventDispatcher = {
     hasListenerFor: function (name) {
 
     },
+
     /**
      * @param {string} name
      * @param {function} callback
@@ -37,8 +41,8 @@ var EventDispatcher = {
     hasCallbackFor: function (name, callback) {
 
     },
+
     mixin: function (instance) {
 
     }
-
-}
+};
