@@ -6,7 +6,14 @@ var EventDispatcher = {
      * @param {Object} opt_scope
      */
     addEventListener: function (name, callback, opt_scope) {
+        var subscribers = this[name] || [];
+        var subscriber = {
+            action: callback,
+            options: opt_scope || null
+        };
 
+        subscribers.push(subscriber);
+        this[name] = subscribers;
     },
 
     /**
@@ -15,14 +22,18 @@ var EventDispatcher = {
      * @param {Object} opt_scope
      */
     removeEventListener: function (name, callback, opt_scope) {
-
+        this[name] = this[name].filter(function(subscriber) {
+            return subscriber.action !== callback;
+        });
     },
 
     /**
      * @param {string} name
      */
     dispatchEvent: function (name) {
-
+        this[name].forEach(function(subscriber) {
+            subscriber.action.call(subscriber.options);
+        });
     },
 
     /**
@@ -30,7 +41,7 @@ var EventDispatcher = {
      * @return {boolean}
      */
     hasListenerFor: function (name) {
-
+        return this.hasOwnProperty(name);
     },
 
     /**
@@ -39,10 +50,12 @@ var EventDispatcher = {
      * @return {boolean}
      */
     hasCallbackFor: function (name, callback) {
-
+        return this[name].some(function (subscriber) {
+            return subscriber.action === callback;
+        });
     },
 
     mixin: function (instance) {
-
+        Object.assign(instance, this);
     }
 };
